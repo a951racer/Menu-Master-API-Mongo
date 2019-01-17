@@ -28,7 +28,6 @@ exports.getMealWithID = (req, res) => {
         if (err) {
             res.send(err);
         }
-        console.log(meal);
         res.json(meal);
     });
 }

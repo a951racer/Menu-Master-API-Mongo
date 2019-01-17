@@ -33,7 +33,6 @@ exports.getRecipeWithID = (req, res) => {
 }
 
 exports.updateRecipe = (req, res) => {
-    console.log(req.body);
     Recipe.findOneAndUpdate({ _id: req.params.recipeId}, req.body, { new: true }, (err, recipe) => {
         if (err) {
             res.send(err);

@@ -1,17 +1,18 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import jsonwebtoken from 'jsonwebtoken';
-//import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 
 module.exports = function() {
-    //dotenv.config();
+    dotenv.config();
     const app = express();
 
     app.use(cors());
-    app.use(morgan('dev'));
+    if (process.env.NODE_ENV !== 'production')
+        app.use(morgan('dev'));
     app.use(helmet());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
