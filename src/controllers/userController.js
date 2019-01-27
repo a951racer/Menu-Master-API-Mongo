@@ -15,6 +15,7 @@ exports.register = (req, res) => {
             });
         } else {
             user.hashPassword = undefined;
+            user.token = jwt.sign({ email: user.email, username: user.username, _id: user.id}, process.env.SESSION_SECRET);
             return res.json(user);
         }
     })

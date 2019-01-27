@@ -8,11 +8,15 @@
     "clean": "rd /s /q build && mkdir build",
     "build-babel": "babel -d ./build ./src -s",
     "build": "npm run build-babel",
-    "start": "npm run build && node ./build/index.js"
+    "start": "npm run build && node ./build/index.js",
+    "dev": "nodemon ./src/index.js --exec babel-node -e js"
   },
   "author": "Emmanuel Henri",
   "license": "ISC",
   "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.24.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
     "cors": "^2.8.5",
@@ -22,10 +26,7 @@
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^4.11.10",
     "morgan": "^1.9.1",
-    "nodemon": "^1.12.0",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-stage-0": "^6.24.1"
+    "nodemon": "^1.12.0"
   },
   "devDependencies": {}
 }
