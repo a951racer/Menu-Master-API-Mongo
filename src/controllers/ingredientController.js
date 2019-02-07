@@ -15,7 +15,9 @@ exports.addNewIngredient = (req, res) => {
 };
 
 exports.getIngredients = (req, res) => {
-    Ingredient.find({}, (err, ingredient) => {
+    Ingredient.find()
+        .sort({name: 1})
+        .exec((err, ingredient) => {
         if (err) {
             res.send(err);
         }

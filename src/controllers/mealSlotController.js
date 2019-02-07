@@ -15,7 +15,9 @@ exports.addNewMealSlot = (req, res) => {
 };
 
 exports.getMealSlots = (req, res) => {
-    MealSlot.find({}, (err, mealSlot) => {
+    MealSlot.find()
+        .sort({order: 1})
+        .exec((err, mealSlot) => {
         if (err) {
             res.send(err);
         }
