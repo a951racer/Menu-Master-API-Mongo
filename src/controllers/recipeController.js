@@ -15,7 +15,10 @@ exports.addNewRecipe = (req, res) => {
 };
 
 exports.getRecipes = (req, res) => {
-    Recipe.find().populate('ingredients').exec((err, recipe) => {
+    Recipe.find()
+        .populate('ingredients')
+        .sort({name: 1})
+        .exec((err, recipe) => {
         if (err) {
             res.send(err);
         }

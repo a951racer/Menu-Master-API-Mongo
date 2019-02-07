@@ -15,7 +15,9 @@ exports.addNewDay = (req, res) => {
 };
 
 exports.getDays = (req, res) => {
-    Day.find({}, (err, days) => {
+    Day.find()
+        .sort({date: 1})
+        .exec((err, days) => {
         if (err) {
             res.send(err);
         }

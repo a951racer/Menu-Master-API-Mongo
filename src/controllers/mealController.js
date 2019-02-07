@@ -15,7 +15,9 @@ exports.addNewMeal = (req, res) => {
 };
 
 exports.getMeals = (req, res) => {
-    Meal.find({}, (err, meal) => {
+    Meal.find()
+        .sort({order: 1})
+        .exec((err, meal) => {
         if (err) {
             res.send(err);
         }

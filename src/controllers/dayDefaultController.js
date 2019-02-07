@@ -15,7 +15,9 @@ exports.addNewDayDefault = (req, res) => {
 };
 
 exports.getDayDefaults = (req, res) => {
-    DayDefault.find({}, (err, dayDefault) => {
+    DayDefault.find()
+        .sort({order: 1})
+        .exec((err, dayDefault) => {
         if (err) {
             res.send(err);
         }
