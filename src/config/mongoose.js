@@ -16,6 +16,8 @@ module.exports = function() {
     require('../models/mealModel');
     require('../models/ingredientModel');
     require('../models/recipeModel');
+    require('../models/mealSlotModel');
+    require('../models/dayModel');
     require('../models/dayDefaultModel');
     return db;
 };
