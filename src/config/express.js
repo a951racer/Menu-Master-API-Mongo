@@ -37,6 +37,7 @@ module.exports = function() {
     require('../routes/recipeRoutes')(app);
     require('../routes/mealSlotRoutes')(app);
     require('../routes/dayRoutes')(app);
+    require('../routes/menuRoutes')(app);
     require('../routes/dayDefaultRoutes')(app);
 
     app.use(express.static('public'));

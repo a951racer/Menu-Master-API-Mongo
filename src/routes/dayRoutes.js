@@ -15,7 +15,7 @@ module.exports = function(app) {
         //.get(days.getDayWithID)
         //.put(days.updateDay)
         //.delete(days.deleteDay);
-        
+
 //    app.param('dayId', days.getDayWithID);
 }
 
