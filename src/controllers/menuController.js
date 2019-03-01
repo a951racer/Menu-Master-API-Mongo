@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const moment = require('moment')
 
 const Day = mongoose.model('Day');
 
 exports.getMenu = (req, res) => {
-    Day.find()
+    const today = moment().utc().startOf('day').toDate();
+    Day.find({date: {$gte: today}})
         .populate({
             path: 'mealSlots',
             options: {sort: 'order'},
@@ -12,9 +14,9 @@ exports.getMenu = (req, res) => {
         .sort('-order')
         .exec((err, days) => {
         if (err) {
-            res.send(err);
+            return res.send(err);
         }
-        res.json(days);
+        return res.json(days);
     });
 };
 
@@ -22,7 +24,7 @@ exports.getDayWithID = (req, res) => {
     Day.findById(req.params.dayId)
         .populate({
             path: 'mealSlots',
-            options: {sort: 'order'},
+            options: {sort: 'orders'},
             populate: { path: 'recipes' }})
             .sort('-order')
             .exec(function(err, day) {
