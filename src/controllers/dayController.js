@@ -1,18 +1,9 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const async = require('async')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-const Day = mongoose.model('Day');
-
-exports.addNewDay = (req, res) => {
-    let newDay = new Day(req.body);
-
-    newDay.save((err, day) => {
-        if (err) {
-            res.send(err);
-        }
-        res.json(day);
-    });
-};
+const Day = mongoose.model('Day')
+const MealSlot = mongoose.model('MealSlot');
 
 exports.getDays = (req, res) => {
     Day.find()
@@ -31,8 +22,8 @@ exports.getDayWithID = (req, res) => {
             path: 'mealSlots',
             options: {sort: 'order'},
             populate: { path: 'recipes' }})
-            .sort('-order')
-            .exec(function(err, day) {
+        .sort('-order')
+        .exec(function(err, day) {
         if (err) {
             res.send(err);
         }
@@ -40,8 +31,46 @@ exports.getDayWithID = (req, res) => {
     });
 }
 
+exports.addNewDay = (req, res) => {
+    let day = req.body
+    let slotList = []
+    day.mealSlots.forEach((slot) => {
+        if (!slot._id) {
+            const newSlot = new MealSlot(slot)
+            slotList.push(newSlot)
+            newSlot.save((err, savedSlot) => {
+
+            })
+        } else {
+            slotList.push(slot)
+        }
+    })
+    day.mealSlots = slotList
+    const newDay = new Day(day)
+    newDay.save((err, day) => {
+        if (err) {
+            res.send(err);
+        }
+        res.json(day);
+    });
+};
+
 exports.updateDay = (req, res) => {
-    Day.findOneAndUpdate({ _id: req.params.dayId}, req.body, { new: true }, (err, day) => {
+    let day = req.body
+    let slotList = []
+    day.mealSlots.forEach((slot) => {
+        if (!slot._id) {
+            const newSlot = new MealSlot(slot)
+            slotList.push(newSlot)
+            newSlot.save((err, savedSlot) => {
+
+            })
+        } else {
+            slotList.push(slot)
+        }
+    })
+    day.mealSlots = slotList
+    Day.findOneAndUpdate({ _id: req.params.dayId}, day, { new: true }, (err, day) => {
         if (err) {
             res.send(err);
         }
@@ -55,5 +84,36 @@ exports.deleteDay = (req, res) => {
             res.send(err);
         }
         res.json({ message: 'Successfully deleted Day'});
+    })
+}
+
+function buildSlotList(slots) {
+    let slotList = []
+    slots.forEach(slot => {
+        console.log('slot: ', slot)
+        const newSlot = findSlot(slot)
+        console.log('returned slot: ', newSlot)
+        slotList.push(newSlot)
+        console.log('slot list: ', slotList)
+    })
+    console.log('slotList: ', slotList)
+    return slotList
+}
+
+function findSlot(slot) {
+    MealSlot.findById(slot._id, (err, foundSlot) => {
+        if (err) res.send(err)
+        if (!foundSlot) {
+            console.log('slot not found')
+            delete slot._id
+            let newMealSlot = new MealSlot(slot)
+            newMealSlot.save((err, newSlot) => {
+                if (err) res.send(err)
+                return newSlot
+            })
+        } else {
+            console.log('slot found: ', slot)
+            return slot
+        }
     })
 }
