@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const MealSlot = mongoose.model('MealSlot');
+const Recipe = mongoose.model('Recipe')
 
 exports.addNewMealSlot = (req, res) => {
     let newMealSlot = new MealSlot(req.body);
@@ -35,6 +36,24 @@ exports.getMealSlotWithID = (req, res) => {
 }
 
 exports.updateMealSlot = (req, res) => {
+    const meal = req.body;
+    meal.recipes.forEach(recipe => {
+        Recipe.findById(recipe._id, (err, foundRecipe) => {
+            if (err) res.send(err)
+            if (!foundRecipe) {
+                let newRecipe = new Recipe(recipe)
+                newRecipe.save((err, newSlot) => {
+                    if (err) {
+                        res.send(err);
+                    }
+                    recipe._id = newRecipe._id;
+                })
+            } else {
+                Recipe.findOneAndUpdate({ _id: recipe._id}, recipe, { new: true })
+            }
+        })
+    })
+    const newMealSlot = new MealSlot(meal)
     MealSlot.findOneAndUpdate({ _id: req.params.mealSlotId}, req.body, { new: true }, (err, mealSlot) => {
         if (err) {
             res.send(err);

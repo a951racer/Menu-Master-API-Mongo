@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Meal = mongoose.model('Meal');
+const Recipe = mongoose.model('Recipe')
 
 exports.addNewMeal = (req, res) => {
     let newMeal = new Meal(req.body);

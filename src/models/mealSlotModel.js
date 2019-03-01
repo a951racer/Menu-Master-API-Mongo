@@ -5,7 +5,7 @@ const Recipe = mongoose.model('Recipe');
 const Schema = mongoose.Schema;
 
 export const MealSlotSchema = new Schema({
-    meal: String,
+    name: String,
     order: Number,
     recipes: [{  type: Schema.Types.ObjectId, ref: 'Recipe' }]
 });

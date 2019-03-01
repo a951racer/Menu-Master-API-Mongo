@@ -13,9 +13,9 @@ module.exports = function() {
         useMongoClient: true
     });
     require('../models/userModel');
-    require('../models/mealModel');
     require('../models/ingredientModel');
     require('../models/recipeModel');
+    require('../models/mealModel');
     require('../models/mealSlotModel');
     require('../models/dayModel');
     require('../models/dayDefaultModel');
