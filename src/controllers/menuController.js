@@ -5,7 +5,7 @@ const moment = require('moment')
 const Day = mongoose.model('Day');
 
 exports.getMenu = (req, res) => {
-    const today = moment().utc().startOf('day').toDate();
+    const today = moment().utcOffset('America/Chicago').startOf('day').toDate();
     Day.find({date: {$gte: today}})
         .populate({
             path: 'mealSlots',
