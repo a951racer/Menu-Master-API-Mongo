@@ -1,12 +1,14 @@
 const async = require('async')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const moment = require('moment')
 
 const Day = mongoose.model('Day')
 const MealSlot = mongoose.model('MealSlot');
 
 exports.getDays = (req, res) => {
-    Day.find()
+    const today = moment().utcOffset('America/Chicago').startOf('day').toDate();
+    Day.find({date: {$gte: today}})
         .sort({date: 1})
         .exec((err, days) => {
         if (err) {
