@@ -11,7 +11,7 @@ exports.getMenu = (req, res) => {
             path: 'mealSlots',
             options: {sort: 'order'},
             populate: { path: 'recipes' }})
-        .sort('-order')
+        .sort('date')
         .exec((err, days) => {
         if (err) {
             return res.send(err);
@@ -26,7 +26,7 @@ exports.getDayWithID = (req, res) => {
             path: 'mealSlots',
             options: {sort: 'orders'},
             populate: { path: 'recipes' }})
-            .sort('-order')
+            .sort('date')
             .exec(function(err, day) {
         if (err) {
             res.send(err);
