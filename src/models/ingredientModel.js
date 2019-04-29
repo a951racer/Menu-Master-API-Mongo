@@ -10,6 +10,9 @@ export const IngredientSchema = new Schema({
     description: {
         type: String
     },
+    size: {
+        type: String
+    },
     productLink: {
         type: String
     },
