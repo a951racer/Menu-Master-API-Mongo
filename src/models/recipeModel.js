@@ -4,6 +4,10 @@ import mongoose from 'mongoose';
 const Ingredient = mongoose.model('Ingredient');
 
 const Schema = mongoose.Schema;
+const IngredientSchema = new Schema({
+    ingredient: {  type: Schema.Types.ObjectId, ref: 'Ingredient' },
+    quantity: String
+})
 
 export const RecipeSchema = new Schema({
     name: {
@@ -11,7 +15,7 @@ export const RecipeSchema = new Schema({
         required: 'Enter a recipe name'
     },
     description: String,
-    ingredients: [{  type: Schema.Types.ObjectId, ref: 'Ingredient' }]
+    ingredients: []
 }, {usePushEach: true});
 
 mongoose.model('Recipe', RecipeSchema);
