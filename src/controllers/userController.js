@@ -14,9 +14,13 @@ exports.register = (req, res) => {
                 message: err
             });
         } else {
-            user.hashPassword = undefined;
-            user.token = jwt.sign({ email: user.email, username: user.username, _id: user.id}, process.env.SESSION_SECRET);
-            return res.json(user);
+            let loggedinUser = {}
+            for (let key of Object.keys(user._doc)) {
+                loggedinUser[key] = user[key];
+            }
+            loggedinUser.hashPassword = undefined;
+            loggedinUser.token = jwt.sign({ email: user.email, username: user.username, _id: user.id}, process.env.SESSION_SECRET);
+            return res.json(loggedinUser);
         }
     })
 }
@@ -29,17 +33,17 @@ exports.login = (req, res) => {
        if (!user) {
            res.status(401).json({ message: 'Authentication failed. No user found!'});
        } else if (user) {
-           if (!user.comparePassword(req.body.password, user.hashPassword)) {
+            if (!user.comparePassword(req.body.password, user.hashPassword)) {
                 res.status(401).json({ message: 'Authentication failed. Wrong password!'});
-       } else {
-            let loggedinUser = {}
-            for (let key of Object.keys(user._doc)) {
-                loggedinUser[key] = user[key];
+            } else {
+                    let loggedinUser = {}
+                    for (let key of Object.keys(user._doc)) {
+                        loggedinUser[key] = user[key];
+                    }
+                    loggedinUser.hashPassword = undefined;
+                    loggedinUser.token = jwt.sign({ email: user.email, username: user.username, _id: user.id}, process.env.SESSION_SECRET);
+                    return res.json(loggedinUser);
             }
-            loggedinUser.hashPassword = undefined;
-            loggedinUser.token = jwt.sign({ email: user.email, username: user.username, _id: user.id}, process.env.SESSION_SECRET);
-            return res.json(loggedinUser);
-       }
     }
    }); 
 }
