@@ -3,6 +3,9 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 export const IngredientSchema = new Schema({
+    externalId: {
+        type: String
+    },
     name: {
         type: String,
         required: 'Enter an ingredient name'
@@ -18,6 +21,20 @@ export const IngredientSchema = new Schema({
     },
     imageLink: {
         type: String
+    },
+    size: {
+        type: String
+    },
+    price: {
+        type: String
+    },
+    new: {
+        type: Boolean,
+        default: false
+    },
+    external: {
+        type: Boolean,
+        default: false
     }
 });
 
