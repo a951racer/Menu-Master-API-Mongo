@@ -18,7 +18,8 @@ export const IngredientSchema = new Schema({
     },
     imageLink: {
         type: String
-    }
+    },
+    voiceTag: String
 });
 
 mongoose.model('Ingredient', IngredientSchema);
