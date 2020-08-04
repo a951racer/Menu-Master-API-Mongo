@@ -58,8 +58,11 @@ exports.addItem = (req, res) => {
         if (err) {
             res.send(err);
         }
-        list.items.push(req.body.id)
-        list.save((err) => {
+        const item = {
+          groceryItem: req.body.id
+        }
+        list.items.push(item)
+        List.findOneAndUpdate({_id: req.params.listId}, {items: list.items}, (err) => {
             if (err) {
                 return res.status(400).send(err);
             } else {
