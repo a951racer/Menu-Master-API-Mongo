@@ -20,6 +20,6 @@ module.exports = function() {
     require('../models/mealSlotModel');
     require('../models/dayModel');
     require('../models/dayDefaultModel');
-    require('../models/ShoppingListModel');
+    require('../models/shoppingListModel');
     return db;
 };
