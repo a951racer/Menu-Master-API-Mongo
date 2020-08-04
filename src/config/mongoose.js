@@ -12,6 +12,7 @@ module.exports = function() {
     const db = mongoose.connect(conn_string, {
         useMongoClient: true
     });
+
     require('../models/userModel');
     require('../models/ingredientModel');
     require('../models/recipeModel');
@@ -19,5 +20,6 @@ module.exports = function() {
     require('../models/mealSlotModel');
     require('../models/dayModel');
     require('../models/dayDefaultModel');
+    require('../models/ShoppingListModel');
     return db;
 };

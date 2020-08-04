@@ -39,6 +39,8 @@ module.exports = function() {
     require('../routes/dayRoutes')(app);
     require('../routes/menuRoutes')(app);
     require('../routes/dayDefaultRoutes')(app);
+    require('../routes/shoppingListRoutes')(app);
+    require('../routes/webhookRoutes')(app);
 
     app.use(express.static('public'));
     
