@@ -35,7 +35,8 @@ export const IngredientSchema = new Schema({
     external: {
         type: Boolean,
         default: false
-    }
+    },
+    voiceTag: String
 });
 
 mongoose.model('Ingredient', IngredientSchema);
