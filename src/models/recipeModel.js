@@ -15,7 +15,8 @@ export const RecipeSchema = new Schema({
         required: 'Enter a recipe name'
     },
     description: String,
-    ingredients: []
+    ingredients: [],
+    instructions: String
 }, {usePushEach: true});
 
 mongoose.model('Recipe', RecipeSchema);
