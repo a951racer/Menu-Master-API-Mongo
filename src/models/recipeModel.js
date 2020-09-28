@@ -16,7 +16,8 @@ export const RecipeSchema = new Schema({
     },
     description: String,
     ingredients: [],
-    instructions: String
+    instructions: String,
+    source: String
 }, {usePushEach: true});
 
 mongoose.model('Recipe', RecipeSchema);
